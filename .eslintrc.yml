@@ -1,0 +1,7 @@
+env:
+    node: true
+
+extends: midion
+
+rules:
+    no-magic-numbers: off
