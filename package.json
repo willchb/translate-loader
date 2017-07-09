@@ -1,6 +1,6 @@
 {
   "name": "translate-loader",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Willian Balmant",
   "description": "translate-loader module for webpack",
   "entry": "index.js",
@@ -35,5 +35,8 @@
     "json-loader": "^0.5.4",
     "mocha": "^3.4.2",
     "webpack": "^3.1.0"
+  },
+  "dependencies": {
+    "loader-utils": "^1.1.0"
   }
 }
