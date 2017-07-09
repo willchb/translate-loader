@@ -14,7 +14,7 @@ const allHelloNLS = {
 describe("hello", function() {
     const mod = { };
     const context = {
-        query: "?locales=en,en-US,fr",
+        query: "?locales[]=en&locales[]=en-US&locales[]=fr",
         resourcePath: path.resolve(__dirname, "nls", "hello_nls.json"),
         addDependency: function () { },
     };

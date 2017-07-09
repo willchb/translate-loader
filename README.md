@@ -67,7 +67,28 @@ module.exports = {
     module: {
         rules: [{
             test: /_nls\.json$/,
-            use: "translate-loader?locales=en,en-US,es,pt"
+            use: "translate-loader?locales=en;en-US;es;pt"
+        }]
+    }
+};
+```
+
+or
+
+**webpack.config.js**
+```js
+module.exports = {
+    module: {
+        rules: [{
+            test: /_nls\.json$/,
+            use: [
+                {
+                    loader: "translate-loader",
+                    options: {
+                        locales: [ "en", "en-US", "es", "pt" ]
+                    }
+                }
+            ]
         }]
     }
 };

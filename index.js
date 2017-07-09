@@ -1,33 +1,22 @@
 const fs = require("fs");
+const loaderUtils = require("loader-utils");
 const path = require("path");
 
-function parseQuery(query) {
-    const paramsArray = query.substr(1).split("&");
-    const params = { };
-
-    for (const param of paramsArray) {
-        const equalPos = param.indexOf("=");
-
-        if (equalPos >= 0) {
-            params[param.substr(0, equalPos)] = param.substr(equalPos + 1);
-        } else {
-            params[param] = null;
-        }
-    }
-    return params;
-}
-
 module.exports = function translateLoader(source) {
-    const query = parseQuery(this.query);
+    const options = loaderUtils.getOptions(this);
     const dirname = path.dirname(this.resourcePath);
     const basename = path.basename(this.resourcePath);
     const translations = { root: JSON.parse(source) };
 
-    if (typeof query.locales === "string") {
-        query.locales = query.locales.split(",");
+    if (this.cacheable) {
+        this.cacheable();
     }
 
-    for (const locale of query.locales) {
+    if (typeof options.locales === "string") {
+        options.locales = options.locales.split(/[ ,;|]/g);
+    }
+
+    for (const locale of options.locales) {
         const resourcePath = path.resolve(dirname, locale, basename);
 
         if (fs.existsSync(resourcePath)) {
