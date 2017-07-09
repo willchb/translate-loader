@@ -16,6 +16,7 @@ describe("hello", function() {
     const context = {
         query: "?locales=en,en-US,fr",
         resourcePath: path.resolve(__dirname, "nls", "hello_nls.json"),
+        addDependency: function () { },
     };
     const source = JSON.stringify(helloNLS);
     const body = translateLoader.call(context, source);
@@ -26,7 +27,7 @@ describe("hello", function() {
     });
 
     it("should return default", function() {
-        //global.locale = "pt";
+        locale = "pt";
         def.call({ }, mod);
         assert.equal(JSON.stringify(mod.exports), JSON.stringify(allHelloNLS.root));
     });
@@ -38,19 +39,19 @@ describe("hello", function() {
     });
 
     it("should still return english", function() {
-        global.locale = "en-IN";
+        locale = "en-IN";
         def.call({ }, mod);
         assert.equal(JSON.stringify(mod.exports), JSON.stringify(allHelloNLS.en));
     });
 
     it("should return american english", function() {
-        global.locale = "en-US";
+        locale = "en-US";
         def.call({ }, mod);
         assert.equal(JSON.stringify(mod.exports), JSON.stringify(allHelloNLS["en-US"]));
     });
 
     it("should return french", function() {
-        global.locale = "fr";
+        locale = "fr";
         def.call({ }, mod);
         assert.equal(JSON.stringify(mod.exports), JSON.stringify(allHelloNLS.fr));
     });

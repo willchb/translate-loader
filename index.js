@@ -31,11 +31,13 @@ module.exports = function translateLoader(source) {
         const resourcePath = path.resolve(dirname, locale, basename);
 
         if (fs.existsSync(resourcePath)) {
+            this.addDependency(resourcePath);
             translations[locale] = JSON.parse(fs.readFileSync(resourcePath));
         }
     }
 
-    return `var translations = ${JSON.stringify(translations)};
+    return `
+var translations = ${JSON.stringify(translations)};
 var env = typeof window !== "undefined" ? "browser" : "node";
 var loc = env === "browser" && (window.locale || navigator.language || navigator.userLanguage) || global.locale;
 var translation = loc && (translations[loc] || translations[loc.substr(0, 2)]) || translations["root"];
