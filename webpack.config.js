@@ -1,15 +1,13 @@
 const path = require("path");
 
 const translateRule = {
-    test: /_nls\.json$/,
-    use: [
-        {
-            loader: "translate-loader",
-            options: {
-                locales: [ "en", "en-US", "fr" ],
-            },
+    test: /_nls\.js(on)?$/,
+    use: {
+        loader: "translate-loader",
+        options: {
+            locales: [ "en", "en-US", "fr" ],
         },
-    ],
+    },
 };
 
 module.exports = {

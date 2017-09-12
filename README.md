@@ -16,12 +16,13 @@ during runtime to specific files, based on browser's locale.
 
 **helloworld.js**
 ```js
-import labels from "labels_nls.json";
+import labels from "./nls/labels_nls.json";
+import strings from "./nls/strings_nls";
 
-console.debug(`${labels.helloWorld} (${labels.localeName})`);
+console.debug(`${labels.helloWorld} (${labels.localeName}). ${strings.textFromJsModule}.`);
 ```
 
-**labels_nls.json**
+**nls/labels_nls.json**
 ```json
 {
     "localeName": "Default",
@@ -29,7 +30,14 @@ console.debug(`${labels.helloWorld} (${labels.localeName})`);
 }
 ```
 
-**en/labels_nls.json**
+**nls/strings_nls.js**
+```js
+export default {
+    textFromJsModule: "Text from a JS Module"
+};
+```
+
+**nls/en/labels_nls.json**
 ```json
 {
     "localeName": "English",
@@ -37,7 +45,7 @@ console.debug(`${labels.helloWorld} (${labels.localeName})`);
 }
 ```
 
-**en-US/labels_nls.json**
+**nls/en-US/labels_nls.json**
 ```json
 {
     "localeName": "English US",
@@ -45,7 +53,7 @@ console.debug(`${labels.helloWorld} (${labels.localeName})`);
 }
 ```
 
-**es/labels_nls.json**
+**nls/es/labels_nls.json**
 ```json
 {
     "localeName": "Español",
@@ -53,7 +61,7 @@ console.debug(`${labels.helloWorld} (${labels.localeName})`);
 }
 ```
 
-**pt/labels_nls.json**
+**nls/pt/labels_nls.json**
 ```json
 {
     "localeName": "Português",
@@ -61,12 +69,19 @@ console.debug(`${labels.helloWorld} (${labels.localeName})`);
 }
 ```
 
+**nls/pt/strings_nls.js**
+```js
+export default {
+    textFromJsModule: "Texto de um módulo JS"
+};
+```
+
 **webpack.config.js**
 ```js
 module.exports = {
     module: {
         rules: [{
-            test: /_nls\.json$/,
+            test: /_nls\.js(on)?$/,
             use: "translate-loader?locales=en;en-US;es;pt"
         }]
     }
@@ -80,15 +95,13 @@ or
 module.exports = {
     module: {
         rules: [{
-            test: /_nls\.json$/,
-            use: [
-                {
-                    loader: "translate-loader",
-                    options: {
-                        locales: [ "en", "en-US", "es", "pt" ]
-                    }
+            test: /_nls\.js(on)?$/,
+            use: {
+                loader: "translate-loader",
+                options: {
+                    locales: [ "en", "en-US", "es", "pt" ]
                 }
-            ]
+            }
         }]
     }
 };
