@@ -1,4 +1,4 @@
 module.exports = {
-    "hello": "Hello!",
-    "speak": "I speak English"
+  hello: "Hello!",
+  speak: "I speak English",
 };

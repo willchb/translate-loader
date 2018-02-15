@@ -36,6 +36,14 @@ module.exports = function translateLoader(source) {
     }
   }
 
+  if (options.returnFunction) {
+    return `
+var translations = { ${requires.join(",")} };
+module.exports = function translate(locale) {
+  return translations[locale] || translations[locale.substr(0, 2)] || translations["root"];
+};`;
+  }
+
   return `
 var translations = { ${requires.join(",")} };
 var env = typeof window !== "undefined" ? "browser" : "node";

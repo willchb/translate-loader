@@ -1,7 +1,11 @@
 env:
-    node: true
+  node: true
 
 extends: midion
 
 rules:
-    no-magic-numbers: off
+  indent:
+    - error
+    - 2
+    - SwitchCase: 1
+  no-magic-numbers: off
